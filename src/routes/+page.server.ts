@@ -6,9 +6,8 @@ export const load = (async ({ url }) => {
 
     if (!query) {
         return { cities: null };
-        // TODO: improve searching
     }
-
+    
     const cities = await getCities(query)
 
     return {
