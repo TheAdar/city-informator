@@ -18,10 +18,12 @@
 	}
 </script>
 
-<form on:submit={(e) => onSubmit(e)}>
-	<input bind:value={query} type="text" placeholder="Search a city" />
-	<button disabled={!query} type="submit">Search</button>
-</form>
+<div class="search-form-container">
+	<form class="search-form" on:submit={(e) => onSubmit(e)}>
+		<input class="search-input" bind:value={query} type="text" placeholder="Search a city" />
+		<button class="search-button" disabled={!query} type="submit">Search</button>
+	</form>
+</div>
 
 {#if data.cities}
 	{#if data.cities.length > 0}
@@ -37,3 +39,55 @@
 		<span>No city found</span>
 	{/if}
 {/if}
+
+<style scoped>
+	.search-form-container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 20px;
+	}
+
+	.search-form {
+		display: flex;
+		width: 400px;
+		max-width: 400px;
+	}
+
+	.search-input {
+		width: 100%;
+		border: 2px solid transparent;
+		outline: 0;
+		border-radius: 5px;
+		height: 35px;
+		background: #4444;
+		color: #999;
+		transition: border 150ms ease;
+	}
+
+	.search-input:focus {
+		border: 2px solid #555;
+	}
+
+	.search-button {
+		cursor: pointer;
+		margin-left: 10px;
+		border: 2px solid transparent;
+		outline: 0;
+		border-radius: 5px;
+		background: #4444;
+		color: #888;
+		font-weight: 500;
+		font-size: 1.1rem;
+		transition: border 150ms ease;
+		padding: 5px 20px;
+	}
+
+	.search-button:disabled {
+		cursor: not-allowed;
+	}
+
+	.search-button:focus {
+		border: 2px solid #555;
+	}
+</style>
