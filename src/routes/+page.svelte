@@ -18,14 +18,22 @@
 	}
 </script>
 
-<div class="search-form-container">
-	<form class="search-form" on:submit={(e) => onSubmit(e)}>
-		<input class="search-input" bind:value={query} type="text" placeholder="Search a city" />
-		<button class="search-button" disabled={!query} type="submit">Search</button>
-	</form>
-</div>
+{#if !data.cities}
+	<div class="search-form-container-start">
+		<form class="search-form" on:submit={(e) => onSubmit(e)}>
+			<input class="search-input" bind:value={query} type="text" placeholder="Search a city" />
+			<button class="search-button" disabled={!query} type="submit">Search</button>
+		</form>
+	</div>
+{/if}
 
 {#if data.cities}
+	<div class="search-form-container">
+		<form class="search-form" on:submit={(e) => onSubmit(e)}>
+			<input class="search-input" bind:value={query} type="text" placeholder="Search a city" />
+			<button class="search-button" disabled={!query} type="submit">Search</button>
+		</form>
+	</div>
 	{#if data.cities.length > 0}
 		<h3>Cities</h3>
 		{#each data.cities as city}
@@ -41,6 +49,13 @@
 {/if}
 
 <style scoped>
+	.search-form-container-start {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 100%;
+	}
+
 	.search-form-container {
 		display: flex;
 		justify-content: center;
@@ -79,11 +94,12 @@
 		color: #888;
 		font-weight: 500;
 		font-size: 1.1rem;
-		transition: border 150ms ease;
+		transition: border 150ms ease, opacity 150ms ease;
 		padding: 5px 20px;
 	}
 
 	.search-button:disabled {
+		opacity: 0.5;
 		cursor: not-allowed;
 	}
 
