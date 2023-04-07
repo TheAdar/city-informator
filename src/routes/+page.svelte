@@ -49,14 +49,14 @@
 				{#each form?.cities as city}
 					<a
 						href={`/details/${city.lat}*${city.lon}`}
-						class="p-4 w-full h-40 bg-zinc-900 rounded-xl transition ease-out text-lg font-semibold hover:-translate-y-2 hover:bg-zinc-800 focus:ring-2 focus:ring-blue-500 outline-none active:scale-110"
+						class="p-4 w-full h-40 bg-zinc-900 rounded-xl transition ease-out text-lg font-semibold focus:-translate-y-2 focus:bg-zinc-800 hover:-translate-y-2 hover:bg-zinc-800 focus:ring-2 focus:ring-blue-500 outline-none active:scale-110"
 					>
 						<span>
 							City: {city.name}
 						</span>
 						<br />
 						<span>
-							<!-- https://www.iban.com/country-codes -->
+							<!-- TODO: https://www.iban.com/country-codes -->
 							Country: {city.country}
 						</span>
 						{#if city.state}
@@ -69,7 +69,9 @@
 				{/each}
 			</div>
 		{:else}
-			<p class="bg-red-500 rounded-lg h-8 flex items-center px-4 text-black text-lg font-semibold">Ooops, no city found :/</p>
+			<p class="bg-red-500 rounded-lg h-8 flex items-center px-4 text-black text-lg font-semibold">
+				Ooops, no city found :/
+			</p>
 		{/if}
 	</div>
 {/if}
