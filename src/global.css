@@ -1,17 +1,41 @@
-* {
-	margin: 0;
-	box-sizing: border-box;
-}
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;500;600;700;800;900&display=swap');
 
-html {
-	width: 100%;
-	height: 100%;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-body {
-	background-color: #000;
-	color: #fff;
-	font-family: sans-serif;
-	width: 100%;
-	height: 100%;
+@layer base {
+    h1 {
+        @apply text-3xl font-black;
+    }
+
+    h2 {
+        @apply text-2xl font-extrabold;
+    }
+
+    h3 {
+        @apply text-xl font-bold;
+    }
+
+    h4 {
+        @apply text-lg font-semibold;
+    }
+
+    h5 {
+        @apply text-base font-medium;
+    }
+
+    h6 {
+        @apply text-sm font-normal;
+    }
+
+    /* default variant */
+    button {
+        @apply rounded-lg px-5 font-semibold outline-none
+    }
+
+    /* default variant */
+    input[type="text"],input[type="email"], input[type="password"], input[type="search"]  {
+        @apply rounded-lg w-full outline-none
+    }
 }

@@ -1,16 +1,18 @@
-import type { PageServerLoad } from './$types';
 import { getCities } from '$lib/api';
+import { fail } from '@sveltejs/kit';
+import type { Actions } from './$types';
 
-export const load = (async ({ url }) => {
-	const query = url.searchParams.get('q');
+export const actions = {
+    default: async ({ request }) => {
+        const data = await request.formData();
+        const searchQuery = data.get('search-query');
 
-	if (!query) {
-		return { cities: null };
-	}
 
-	const cities = await getCities(query);
+        if (!searchQuery) return fail(400, { searchQuery, missing: true })
 
-	return {
-		cities
-	};
-}) satisfies PageServerLoad;
+        const cities = await getCities(searchQuery.toString())
+        console.log(cities);
+
+        return { cities }
+    }
+} satisfies Actions;

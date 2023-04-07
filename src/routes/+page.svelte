@@ -1,42 +1,38 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { enhance } from '$app/forms';
 
-	import type { PageData } from './$types';
-	export let data: PageData;
+	export let form;
 
+	// for checks
 	let query = '';
-
-	function onSubmit(
-		e: Event & {
-			readonly submitter: HTMLElement | null;
-		} & {
-			currentTarget: EventTarget & HTMLFormElement;
-		}
-	) {
-		e.preventDefault();
-		goto('/?q=' + query.toLocaleLowerCase());
-	}
 </script>
 
-{#if !data.cities}
-	<div class="search-form-container-start">
-		<form class="search-form" on:submit={(e) => onSubmit(e)}>
-			<input class="search-input" bind:value={query} type="text" placeholder="Search a city" />
-			<button class="search-button" disabled={!query} type="submit">Search</button>
-		</form>
-	</div>
-{/if}
+<!-- TODO: slide animation to the search form -->
+<div class={`m-auto max-w-md ${query ? '' : 'flex flex-col justify-center h-full'}`}>
+	{#if !query}
+		<h1 class="mb-3">City Informator</h1>
+	{/if}
+	<form method="POST" class={`flex ${query && 'p-4'}`} use:enhance>
+		<input
+			name="search-query"
+			class="bg-zinc-900 border-zinc-800 placeholder:text-zinc-500"
+			bind:value={query}
+			type="search"
+			placeholder="Search a city"
+		/>
+		<button
+			class="bg-zinc-900 ml-2 rounded-lg disabled:opacity-50 focus:ring-2 focus:ring-blue-500"
+			disabled={!query}
+			type="submit">Search</button
+		>
+	</form>
+</div>
 
-{#if data.cities}
-	<div class="search-form-container">
-		<form class="search-form" on:submit={(e) => onSubmit(e)}>
-			<input class="search-input" bind:value={query} type="text" placeholder="Search a city" />
-			<button class="search-button" disabled={!query} type="submit">Search</button>
-		</form>
-	</div>
-	{#if data.cities.length > 0}
-		<h3>Cities</h3>
-		{#each data.cities as city}
+{#if form?.cities && query}
+	{#if form.cities.length >= 1}
+		<h2>Cities</h2>
+		{#each form?.cities as city}
 			<button
 				on:click={() => {
 					goto(`/details/${city.lat}*${city.lon}`);
@@ -47,63 +43,3 @@
 		<span>No city found</span>
 	{/if}
 {/if}
-
-<style scoped>
-	.search-form-container-start {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		height: 100%;
-	}
-
-	.search-form-container {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		padding: 20px;
-	}
-
-	.search-form {
-		display: flex;
-		width: 400px;
-		max-width: 400px;
-	}
-
-	.search-input {
-		width: 100%;
-		border: 2px solid transparent;
-		outline: 0;
-		border-radius: 5px;
-		height: 35px;
-		background: #4444;
-		color: #999;
-		transition: border 150ms ease;
-	}
-
-	.search-input:focus {
-		border: 2px solid #555;
-	}
-
-	.search-button {
-		cursor: pointer;
-		margin-left: 10px;
-		border: 2px solid transparent;
-		outline: 0;
-		border-radius: 5px;
-		background: #4444;
-		color: #888;
-		font-weight: 500;
-		font-size: 1.1rem;
-		transition: border 150ms ease, opacity 150ms ease;
-		padding: 5px 20px;
-	}
-
-	.search-button:disabled {
-		opacity: 0.7;
-		cursor: not-allowed;
-	}
-
-	.search-button:focus {
-		border: 2px solid #555;
-	}
-</style>
