@@ -3,10 +3,9 @@ import { fail } from '@sveltejs/kit';
 import type { Actions } from './$types';
 
 export const actions = {
-    default: async ({ request }) => {
+    search: async ({ request }) => {
         const data = await request.formData();
         const searchQuery = data.get('search-query');
-
 
         if (!searchQuery) return fail(400, { searchQuery, missing: true })
 
