@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import { enhance } from '$app/forms';
 
 	export let form;
@@ -31,14 +30,20 @@
 
 {#if form?.cities && query}
 	{#if form.cities.length >= 1}
-		<h2>Cities</h2>
-		{#each form?.cities as city}
-			<button
-				on:click={() => {
-					goto(`/details/${city.lat}*${city.lon}`);
-				}}>{city.name} ({city.country})</button
-			>
-		{/each}
+		<div class="m-auto max-w-3xl px-4">
+			<h2 class="mb-5">Cities</h2>
+			<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+				{#each form?.cities as city}
+					<a
+						href={`/details/${city.lat}*${city.lon}`}
+						class="w-full h-40 bg-zinc-900 rounded-xl flex items-center justify-center transition ease-out hover:-translate-y-2 hover:bg-zinc-800"
+					>
+						{city.name}
+						{city.country}
+					</a>
+				{/each}
+			</div>
+		</div>
 	{:else}
 		<span>No city found</span>
 	{/if}
