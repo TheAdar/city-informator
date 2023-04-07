@@ -5,7 +5,7 @@
 
 	// for checks
 	let value = '';
-	let isSearching = true;
+	let isSearching = false;
 
 	function onSubmit() {
 		if (!isSearching) isSearching = true;
